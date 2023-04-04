@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addPostAsync } from "../features/posts/postsSlice";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const PostForm = () => {
+  const notify = () => toast("Post added Sucessfully!");
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({ title: "", body: "" });
   const handleChange = (e) => {
@@ -12,11 +15,10 @@ const PostForm = () => {
   const handleSubmit = e=>{
     e.preventDefault()
     dispatch(addPostAsync(formData))
+    notify()
     setFormData({title: '', body: ''})
   }
 //   console.log(formData);
-const savedPosts = localStorage.getItem("posts")
-// console.log(savedPosts);
   return (
     <div className="my-3">
       <form onSubmit={handleSubmit}>
@@ -39,7 +41,9 @@ const savedPosts = localStorage.getItem("posts")
             <button type="submit" className="btn btn-primary">ADD POST</button>
         </div>
       </form>
+      <ToastContainer />
     </div>
+
   );
 };
 
